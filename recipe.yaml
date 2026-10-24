@@ -1,0 +1,70 @@
+name: DOJRP
+version: 1.0.0
+author: DOJRP
+description: DOJRP server - dojrp_core (core, joby, inventar, multicharacter) + oxmysql
+
+$engine: 2
+$minFxVersion: 6116
+$onesync: on
+$steamRequired: false
+
+tasks:
+  # ---- FiveM zakladni resources (spawnmanager, chat, mapmanager, ...) ----
+  - action: download_github
+    src: https://github.com/citizenfx/cfx-server-data
+    ref: master
+    subpath: resources
+    dest: ./resources
+
+  # ---- oxmysql ----
+  - action: download_file
+    url: https://github.com/overextended/oxmysql/releases/latest/download/oxmysql.zip
+    path: ./tmp/oxmysql.zip
+  - action: unzip
+    src: ./tmp/oxmysql.zip
+    dest: ./resources/[standalone]
+
+  # ---- dojrp_core ----
+  # !!! ZMEN na svuj repozitar (fxmanifest.lua musi byt v koreni repozitare) !!!
+  - action: download_github
+    src: https://github.com/TVUJ_UCET/dojrp_core
+    ref: main
+    dest: ./resources/[dojrp]/dojrp_core
+
+  # ---- server.cfg ----
+  - action: write_file
+    file: ./server.cfg
+    data: |
+      # Endpointy nastavuje txAdmin
+      {{serverEndpoints}}
+
+      sv_hostname "{{serverName}}"
+      sets sv_projectName "{{serverName}}"
+      sets sv_projectDesc "{{recipeDescription}}"
+      sets locale "cs-CZ"
+      sets tags "roleplay, czech, doj"
+
+      sv_licenseKey "{{svLicense}}"
+      sv_maxclients {{maxClients}}
+      set steam_webApiKey ""
+      sv_scriptHookAllowed 0
+      set mysql_connection_string "{{dbConnectionString}}"
+
+      # Zakladni resources
+      ensure mapmanager
+      ensure chat
+      ensure spawnmanager
+      ensure sessionmanager
+      ensure hardcap
+
+      # DOJRP
+      ensure oxmysql
+      ensure dojrp_core
+
+      # Opravneni
+      add_ace group.admin command allow
+      add_ace group.admin command.quit deny
+      add_ace group.admin dojrp.admin allow
+
+      # Pridej sebe jako admina (zadej svou Rockstar licenci):
+      # add_principal identifier.license:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX group.admin
