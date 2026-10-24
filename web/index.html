@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="toasts"></div>
+
+<!-- Multicharacter -->
+<div id="mc" class="hidden">
+  <div class="panel">
+    <h1 id="mc-server"></h1>
+
+    <div class="screen active" id="s-list">
+      <h2>Vyber postavu</h2>
+      <div id="list"></div>
+    </div>
+
+    <div class="screen" id="s-create">
+      <h2>Nová postava</h2>
+      <div class="row">
+        <div><label>Jméno</label><input id="fn" maxlength="24"></div>
+        <div><label>Příjmení</label><input id="ln" maxlength="24"></div>
+      </div>
+      <div class="row">
+        <div><label>Datum narození</label><input id="dob" type="date"></div>
+        <div><label>Výška (cm)</label><input id="height" type="number" value="175"></div>
+      </div>
+      <label>Pohlaví</label>
+      <div class="seg"><button class="btn on" id="g-male">Muž</button><button class="btn" id="g-female">Žena</button></div>
+      <label>Vzhled postavy</label><select id="ped"></select>
+      <div class="err" id="err"></div>
+      <button class="btn main" id="create-next">Pokračovat</button>
+      <button class="back" id="create-back">← Zpět</button>
+    </div>
+
+    <div class="screen" id="s-spawn">
+      <h2>Kde chceš začít?</h2>
+      <div id="spawns"></div>
+      <button class="back" id="spawn-back">← Zpět</button>
+    </div>
+  </div>
+</div>
+
+<!-- Inventář -->
+<div id="inv" class="hidden">
+  <div class="invbox">
+    <div class="invhead">
+      <div><h1 id="inv-server"></h1><h2>Inventář</h2></div>
+      <div class="money" id="money"></div>
+    </div>
+    <div class="invbody">
+      <div class="grid" id="grid"></div>
+      <div class="side">
+        <div class="wlabel"><span>Váha</span><span id="wtext"></span></div>
+        <div class="wbar"><div id="wfill"></div></div>
+        <div id="detail" class="detail"></div>
+      </div>
+    </div>
+    <div class="hint">Přetažením přesuneš předmět · dvojklik = použít · Esc = zavřít</div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
