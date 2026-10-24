@@ -3,12 +3,15 @@ version: 1.0.0
 author: DOJRP
 description: DOJRP server - dojrp_core (core, joby, inventar, multicharacter) + oxmysql
 
-$engine: 2
-$minFxVersion: 6116
+$engine: 3
+$minFxVersion: 12913
 $onesync: on
 $steamRequired: false
 
 tasks:
+  # ---- databaze (txAdmin ji vytvori a doplni {{dbConnectionString}}) ----
+  - action: connect_database
+
   # ---- FiveM zakladni resources (spawnmanager, chat, mapmanager, ...) ----
   - action: download_github
     src: https://github.com/citizenfx/cfx-server-data
@@ -24,10 +27,9 @@ tasks:
     src: ./tmp/oxmysql.zip
     dest: ./resources/[standalone]
 
-  # ---- dojrp_core ----
-  # !!! ZMEN na svuj repozitar (fxmanifest.lua musi byt v koreni repozitare) !!!
+  # ---- dojrp_core (fxmanifest.lua musi byt v koreni repozitare) ----
   - action: download_github
-    src: https://github.com/TVUJ_UCET/dojrp_core
+    src: https://github.com/KaizenScripts/dojrp_core
     ref: main
     dest: ./resources/[dojrp]/dojrp_core
 
